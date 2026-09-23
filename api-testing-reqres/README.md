@@ -44,7 +44,7 @@ The goal is to demonstrate practical API testing skills, writing assertions, and
 ## How to Run
 
 1. Download and install [Postman](https://www.postman.com/downloads/).
-2. Import the collection file: `postman/ReqRes_API_Testing.postman_collection.json`
+2. Import the collection file: `ReqRes_API_Testing.postman_collection.json`
 3. Create a new Environment with the following variables:
 
 | Variable   | Value                 | Description                          |
