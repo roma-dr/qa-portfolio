@@ -87,14 +87,6 @@ The goal is to demonstrate practical API testing skills, writing assertions, and
 | Assertions        | 42    |
 | Failed Assertions | 0     |
 
-## Project Structure
-DummyJSON API Testing/
-├── 01. Auth/ # Login, token, /auth/me
-├── 02. Products - Positive/ # CRUD + search + category
-├── 03. Products - Negative/ # 404, missing title, empty search
-├── 04. Users/ # List, single, search
-└── 05. Edge Cases/ # Pagination, large skip, invalid category
-
 ## Notes
 
 - DummyJSON simulates write operations (`POST`, `PUT`, `DELETE`): the server returns a successful response with a generated `id`, but the data is **not persisted** between requests. This is expected behavior of the demo API.
