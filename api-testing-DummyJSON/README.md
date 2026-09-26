@@ -86,14 +86,14 @@ The goal is to demonstrate practical API testing skills, writing assertions, and
 | Assertions (failed) | 2     |
 | Observations Noted  | 2     |
 
+---
+
 ## Overview
 
 During API testing, 2 observations were documented. These are **not defects** — 
 they are noted as deviations from common REST conventions and best practices, 
 with the understanding that DummyJSON is a mock/demo API that does not persist 
 data or enforce business rules by design.
-
----
 
 ## OBS-001: Empty search query `q=` returns all products
 
@@ -116,8 +116,6 @@ data or enforce business rules by design.
 Return `400 Bad Request` with `{ "message": "query parameter 'q' cannot be empty" }` 
 or `200 OK` with an empty array, to let clients distinguish "no results" from 
 "invalid query".
-
----
 
 ## OBS-002: POST /products/add accepts payload without required `title`
 
