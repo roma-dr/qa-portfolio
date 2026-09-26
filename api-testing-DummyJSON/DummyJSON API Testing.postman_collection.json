@@ -466,7 +466,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response has id\", function () {\n    var json = pm.response.json();\n    pm.expect(json).to.have.property(\"id\");\n});"
+                  "pm.test(\"[OBS-001] Server should reject product without title\", function () {\n    pm.expect(pm.response.code).to.eql(400,\n        \"OBS: Server returned \" + pm.response.code + \" instead of 400 for missing required field 'title'\");\n});\n\nconsole.log(\"OBS-001 reproduced. Status:\", pm.response.code);\nconsole.log(\"Body:\", JSON.stringify(pm.response.json()));"
                 ]
               }
             }
@@ -504,7 +504,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Products is an array\", function () {\n    var json = pm.response.json();\n    pm.expect(json.products).to.be.an(\"array\");\n});"
+                  "pm.test(\"[OBS-002] Empty search query should not return all products\", function () {\n    var json = pm.response.json();\n\n    pm.expect(json.products.length).to.be.below(30,\n        \"OBS: Empty query 'q=' returned \" + json.products.length + \n        \" products instead of empty array or 400 error\"\n    );\n});\n\nconsole.log(\"OBS-002 reproduced. Status:\", pm.response.code);\nconsole.log(\"Products returned:\", pm.response.json().products.length);\nconsole.log(\"Total:\", pm.response.json().total);"
                 ]
               }
             }
@@ -512,6 +512,15 @@
           "request": {
             "method": "GET",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "{{base_url}}/products/search?q=",
               "host": [

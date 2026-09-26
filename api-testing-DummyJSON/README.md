@@ -80,15 +80,79 @@ The goal is to demonstrate practical API testing skills, writing assertions, and
 
 ## Test Execution Summary
 
-| Metric            | Count |
-|-------------------|-------|
-| Requests          | 21    |
-| Test Scripts      | 21    |
-| Assertions        | 42    |
-| Failed Assertions | 0     |
+| Metric              | Count |
+|---------------------|-------|
+| Requests            | 21    |
+| Assertions (passed) | 42    |
+| Assertions (failed) | 2     |
+| Observations Noted  | 2     |
+
+## Project Structure
+DummyJSON API Testing/
+├── 01. Auth/ # Login, token, /auth/me
+├── 02. Products - Positive/ # CRUD + search + category
+├── 03. Products - Negative/ # 404, missing title, empty search
+├── 04. Users/ # List, single, search
+└── 05. Edge Cases/ # Pagination, large skip, invalid category
+
+## Overview
+
+During API testing, 2 observations were documented. These are **not defects** — 
+they are noted as deviations from common REST conventions and best practices, 
+with the understanding that DummyJSON is a mock/demo API that does not persist 
+data or enforce business rules by design.
+
+---
+
+## OBS-001: Empty search query `q=` returns all products
+
+| Field | Value |
+|-------|-------|
+| **ID** | OBS-001 |
+| **Type** | Observation — inconsistent input handling |
+| **Severity** | Informational |
+| **Endpoint** | `GET /products/search?q=` |
+
+**Steps to reproduce:**
+1. Send `GET https://dummyjson.com/products/search?q=`
+2. Observe response
+
+**Expected (per common REST conventions):** `400 Bad Request` OR `200 OK` with `products: []`
+
+**Actual:** `200 OK` with all 30 products returned (`total: 194`)
+
+**Recommendation (for a production API):**
+Return `400 Bad Request` with `{ "message": "query parameter 'q' cannot be empty" }` 
+or `200 OK` with an empty array, to let clients distinguish "no results" from 
+"invalid query".
+
+---
+
+## OBS-002: POST /products/add accepts payload without required `title`
+
+| Field | Value |
+|-------|-------|
+| **ID** | OBS-002 |
+| **Type** | Observation — missing server-side validation |
+| **Severity** | Informational |
+| **Endpoint** | `POST /products/add` |
+
+**Steps to reproduce:**
+1. Send `POST https://dummyjson.com/products/add`
+2. Body: `{ "price": 99, "category": "smartphones" }` (no `title`)
+3. Observe response
+
+**Expected (per REST best practices):** `400 Bad Request` with validation error
+
+**Actual:** `201 Created`, product returned without `title` field
+
+**Recommendation (for a production API):**
+Validate required fields on the server side and return `400 Bad Request` 
+with a clear error message listing missing fields.
+
+---
 
 ## Notes
 
 - DummyJSON simulates write operations (`POST`, `PUT`, `DELETE`): the server returns a successful response with a generated `id`, but the data is **not persisted** between requests. This is expected behavior of the demo API.
-- Test user credentials: `emilys` / `emilyspass`.
 - The `access_token` variable is set automatically by the test script in the *Successful Login* request.
