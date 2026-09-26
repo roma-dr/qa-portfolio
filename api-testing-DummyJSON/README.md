@@ -86,8 +86,6 @@ The goal is to demonstrate practical API testing skills, writing assertions, and
 | Assertions (failed) | 2     |
 | Observations Noted  | 2     |
 
----
-
 ## Overview
 
 During API testing, 2 observations were documented. These are **not defects** — 
@@ -138,8 +136,6 @@ or `200 OK` with an empty array, to let clients distinguish "no results" from
 **Recommendation (for a production API):**
 Validate required fields on the server side and return `400 Bad Request` 
 with a clear error message listing missing fields.
-
----
 
 ## Notes
 
