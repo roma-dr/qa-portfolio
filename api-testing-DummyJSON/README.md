@@ -87,14 +87,6 @@ The goal is to demonstrate practical API testing skills, writing assertions, and
 | Assertions (failed) | 2     |
 | Observations Noted  | 2     |
 
-## Project Structure
-DummyJSON API Testing/
-├── 01. Auth/ # Login, token, /auth/me
-├── 02. Products - Positive/ # CRUD + search + category
-├── 03. Products - Negative/ # 404, missing title, empty search
-├── 04. Users/ # List, single, search
-└── 05. Edge Cases/ # Pagination, large skip, invalid category
-
 ## Overview
 
 During API testing, 2 observations were documented. These are **not defects** — 
