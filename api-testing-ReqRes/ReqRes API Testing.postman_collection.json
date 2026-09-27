@@ -392,9 +392,12 @@
             "method": "POST",
             "header": [],
             "body": {
-              "mode": "file",
-              "file": {
-                "src": ""
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"eve.holt@reqres.in\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
               }
             },
             "url": {
