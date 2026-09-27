@@ -1,6 +1,6 @@
 ## Introduction
 
-This project demonstrates API testing of the public ReqRes(https://reqres.in) REST API using Postman.  
+This project demonstrates API testing of the public ReqRes (https://reqres.in) REST API using Postman.  
 It covers positive and negative scenarios, authentication flows, and edge cases to practice writing assertions and organizing test collections.
 
 ## Project Overview
