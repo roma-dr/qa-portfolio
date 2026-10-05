@@ -50,8 +50,8 @@ This project covers functional testing of a real public weather API:
 | `city`     | `London`                                           | Default city for requests  |
 
 4. Get a free API key: [https://openweathermap.org/api](https://openweathermap.org/api)  
-5. Select the Environment in the top-right corner of Postman.
-6. Run the collection via **Collection Runner** or send requests one by one.
+5. Select the Environment.
+6. Run the collection via Collection Runner or send requests one by one.
 
 ## Testing Techniques Used
 
@@ -70,4 +70,4 @@ This project covers functional testing of a real public weather API:
 ## Notes
 
 - This is a real production API, not a mock service.
-- Classic functional bugs are unlikely; the value of this project is practice with a live API, API keys, and negative scenarios.
+- Classic functional bugs are unlikely. The value of this project is practice with a live API, API keys, and negative scenarios.
