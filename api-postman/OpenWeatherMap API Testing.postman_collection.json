@@ -1,0 +1,637 @@
+{
+  "info": {
+    "_postman_id": "9ff5bbe5-ffbc-4ef0-85a3-e18ede9bf851",
+    "name": "OpenWeatherMap API Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58312191",
+    "_collection_link": "https://go.postman.co/collection/58312191-9ff5bbe5-ffbc-4ef0-85a3-e18ede9bf851?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Positive — Current Weather",
+      "item": [
+        {
+          "name": "1.1 Weather by city name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response has main.temp\", function () {\n    const json = pm.response.json();\n    pm.expect(json.main).to.have.property(\"temp\");\n});\n\npm.test(\"Response has weather array\", function () {\n    const json = pm.response.json();\n    pm.expect(json.weather).to.be.an(\"array\").that.is.not.empty;\n});\n\npm.test(\"City name is present\", function () {\n    const json = pm.response.json();\n    pm.expect(json.name).to.be.a(\"string\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q={{city}}&appid={{api_key}}&units=metric",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "{{city}}"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                },
+                {
+                  "key": "units",
+                  "value": "metric"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "1.2 Weather by city + country",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Country is GB\", function () {\n    const json = pm.response.json();\n    pm.expect(json.sys.country).to.eql(\"GB\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=London,UK&appid={{api_key}}&units=metric",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London,UK"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                },
+                {
+                  "key": "units",
+                  "value": "metric"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "1.3 Weather by coordinates",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Coordinates are returned\", function () {\n    const json = pm.response.json();\n    pm.expect(json.coord).to.have.property(\"lat\");\n    pm.expect(json.coord).to.have.property(\"lon\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?lat=51.51&lon=-0.13&appid={{api_key}}&units=metric",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "lat",
+                  "value": "51.51"
+                },
+                {
+                  "key": "lon",
+                  "value": "-0.13"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                },
+                {
+                  "key": "units",
+                  "value": "metric"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "1.4 Units — metric",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Temperature is a number\", function () {\n    const json = pm.response.json();\n    pm.expect(json.main.temp).to.be.a(\"number\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=London&appid={{api_key}}&units=metric",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                },
+                {
+                  "key": "units",
+                  "value": "metric"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "1.5 Units — imperial",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Response contains temp\", function () {\n    const json = pm.response.json();\n    pm.expect(json.main).to.have.property(\"temp\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=London&appid={{api_key}}&units=imperial",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                },
+                {
+                  "key": "units",
+                  "value": "imperial"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "1.6 Language — Russian",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Weather description exists\", function () {\n    const json = pm.response.json();\n    pm.expect(json.weather[0]).to.have.property(\"description\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=London&appid={{api_key}}&lang=ru&units=metric",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                },
+                {
+                  "key": "lang",
+                  "value": "ru"
+                },
+                {
+                  "key": "units",
+                  "value": "metric"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Positive — Forecast",
+      "item": [
+        {
+          "name": "2.1 5-day forecast by city",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"Forecast list is not empty\", function () {\n    const json = pm.response.json();\n    pm.expect(json.list).to.be.an(\"array\").that.is.not.empty;\n});\n\npm.test(\"Each item has temp\", function () {\n    const json = pm.response.json();\n    pm.expect(json.list[0].main).to.have.property(\"temp\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/forecast?q=London&appid={{api_key}}&units=metric",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "forecast"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                },
+                {
+                  "key": "units",
+                  "value": "metric"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Negative",
+      "item": [
+        {
+          "name": "3.1 Missing API key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\n    pm.response.to.have.status(401);\n});\n\npm.test(\"Error message is present\", function () {\n    const json = pm.response.json();\n    pm.expect(json).to.have.property(\"message\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=London",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3.2 Invalid API key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\n    pm.response.to.have.status(401);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=London&appid=invalid_key_123",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                },
+                {
+                  "key": "appid",
+                  "value": "invalid_key_123"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3.3 Non-existent city",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\n    pm.response.to.have.status(404);\n});\n\npm.test(\"Error message is present\", function () {\n    const json = pm.response.json();\n    pm.expect(json).to.have.property(\"message\");\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=CityThatDoesNotExist12345&appid={{api_key}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "CityThatDoesNotExist12345"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3.4 Empty city parameter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\n    pm.response.to.have.status(400);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=&appid={{api_key}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": ""
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3.5 Invalid coordinates",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\n    pm.response.to.have.status(400);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?lat=999&lon=999&appid={{api_key}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "lat",
+                  "value": "999"
+                },
+                {
+                  "key": "lon",
+                  "value": "999"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3.6 Missing required location parameter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\n    pm.response.to.have.status(400);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?appid={{api_key}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Edge Cases",
+      "item": [
+        {
+          "name": "4.1 Special characters in city name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400 or 404\", function () {\n    pm.expect(pm.response.code).to.be.oneOf([400, 404]);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=@@@&appid={{api_key}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "@@@"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4.2 Response time",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Response time is under 3000ms\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(3000);\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/weather?q=London&appid={{api_key}}&units=metric",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{api_key}}"
+                },
+                {
+                  "key": "units",
+                  "value": "metric"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
